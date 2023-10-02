@@ -67,7 +67,7 @@
         </ol>
     </div>
 
-    @include('admin.pages.artist.form')
+    @include('admin.pages.user.form')
     @include('layout.flash-message')
 
     {{--        <!-- Main content -->--}}
@@ -79,7 +79,7 @@
                    <div class="col-lg-12 m-b-3">
                        <div class="box box-info" style="padding: 10px;">
                            <div class="box-header with-border p-t-1">
-                             <a href="#" id="form" class="button"> <button type="button" class="btn-sm btn-primary mt-2 mb-2 button">Create</button> </a>
+                             <a href="#" id="form"> <button type="button" class="btn-sm btn-primary mt-2 mb-2 button">Create</button> </a>
                              <button type="button" class="btn-sm btn-primary mt-2 mb-2 ml-4 button" id="import-btn">Import</button>
                              <div class="import ml-4 hide" id="import">
                                 <form action="#" method="post" enctype="multipart/form-data">
@@ -92,7 +92,7 @@
                            </div>
                            <div class="col-lg-12">
 
-                              <form action="{{ route('artist.index') }}" method="GET">
+                              <form action="{{ route('user.index') }}" method="GET">
                                   <div class="input-group">
                                     <input type="text" class="search-query form-control" placeholder="Search" name="search" value="{{ request('search') }}" />
                                         <span class="input-group-btn" style="margin-left:10px;">
@@ -110,32 +110,34 @@
                                       <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
+                                            <th>First Name</th>
+                                            <th>Last_name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
                                             <th>Dob</th>
                                             <th>Gender</th>
                                             <th>Address</th>
-                                            <th>First Release Year</th>
-                                            <th>No Of Albums Released</th>
                                             <th>Action</th>
                                         </tr>
                                       </thead>
                                         <tbody>
-                                            @if(isset($artist[0]))
-                                            @foreach ($artist as $key => $product)
+                                            @foreach ($user as $key => $product)
                                             <tr>
                                                 <td>{{ ++ $key }}</td>
-                                                <td>{{ $product->name }}</td>
+                                                <td>{{ $product->first_name }}</td>
+                                                <td>{{ $product->last_name }}</td>
+                                                <td>{{ $product->email }}</td>
+                                                <td>{{ $product->phone }}</td>
                                                 <td>{{ $product->dob }}</td>
                                                 <td>{{ $product->gender }}</td>
                                                 <td>{{ $product->address }}</td>
-                                                <td>{{ $product->first_release_year }}</td>
-                                                <td>{{ $product->no_of_albums_released }}</td>
+                                                
                                                 
                                                 <td>
-                                                    <a href="{{ url('/dashboard/artist/edit/' . $product->id) }}"><span class="label label-success"><i class="fa fa-pencil-square" aria-hidden="true"></i></span></a>
+                                                    <a href="{{ url('/dashboard/user/edit/' . $product->id) }}"><span class="label label-success"><i class="fa fa-pencil-square" aria-hidden="true"></i></span></a>
                                                 </td>
                                                 <td>
-                                                     <form method="POST" action="{{ route('artist.destroy', $product->id) }}">
+                                                     <form method="POST" action="{{ route('user.destroy', $product->id) }}">
                                                      @csrf
                                                     <input name="_method" type="hidden" value="DELETE">
                                                     <button type="submit" class="show_confirm label-danger" data-toggle="tooltip" title='Delete' style="background: tranparent; border:none;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
@@ -143,12 +145,11 @@
                                                 </td>
                                             </tr>
                                             @endforeach
-                                            @endif
                                         </tbody>
    
                                    </table>
-                                    <div class="pagination-container" style="margin-top:20px;">
-                                    <ul class="pagination">
+                                    <div class="pagination-container mt-5" style="margin-top:20px;">
+                                        <ul class="pagination">
                                             @if(! $pageno == 1)
                                             <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
                                                 <a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>" class="prev-next"><</a>
@@ -186,7 +187,7 @@ $('.modal').css("background-color", "#454d55");
 
 $('.close').click(function(){
     // $('#formModal').hide();
-    $(location).attr("href", "/dashboard/artist/");
+    $(location).attr("href", "/dashboard/user/");
 });
 </script>
 @endif
@@ -222,10 +223,10 @@ $('.close').click(function(){
             $('#formModal').modal();
         });
 
-        $('#import-btn').click(function(e){
+      $('#import-btn').click(function(e){
         $('#import').toggleClass('hide');
         $('#import-btn').toggleClass('hide');
-        });
+      });
   
 </script>
 

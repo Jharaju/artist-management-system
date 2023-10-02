@@ -21,23 +21,42 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthenticatedSessionController::class, 'create']);
 
-Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware(['auth']);
+Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware(['auth'])->name('dashboard');
 
 
-Route::post('/save_image/{id?}', [AdminController::class, 'save_image'])->middleware(['auth'])->name('upload.image');
+Route::post('/save_image/{id?}', [AdminController::class, 'uploadImage'])->middleware(['auth'])->name('upload.image');
 
 Route::post('/store_image', [AdminController::class, 'storeImage'])->middleware(['auth'])->name('ckeditor.upload');
 
 
 /**
- * BannerController
+ * UserController
+ */
+Route::get('/dashboard/user', [UserController::class, 'index'])->middleware(['auth'])->name('user.index');
+Route::post('/dashboard/user/store', [UserController::class, 'store'])->middleware(['auth'])->name('user.store');
+Route::delete('/dashboard/user/{id}', [UserController::class, 'destory'])->middleware(['auth'])->name('user.destroy');
+Route::get('/dashboard/user/edit/{id}', [UserController::class, 'edit'])->middleware(['auth'])->name('user.edit');
+Route::put('/dashboard/user/update/{id}', [UserController::class, 'update'])->middleware(['auth'])->name('user.update');
+
+
+/**
+ * ArtistController
  */
 Route::get('/dashboard/artist', [ArtistController::class, 'index'])->middleware(['auth'])->name('artist.index');
-Route::get('/dashboard/banner/artist', [ArtistController::class, 'create'])->middleware(['auth'])->name('artist.create');
 Route::post('/dashboard/artist/store', [ArtistController::class, 'store'])->middleware(['auth'])->name('artist.store');
 Route::delete('/dashboard/artist/{id}', [ArtistController::class, 'destory'])->middleware(['auth'])->name('artist.destroy');
 Route::get('/dashboard/artist/edit/{id}', [ArtistController::class, 'edit'])->middleware(['auth'])->name('artist.edit');
 Route::put('/dashboard/artist/update/{id}', [ArtistController::class, 'update'])->middleware(['auth'])->name('artist.update');
+
+/**
+ * MusicController
+ */
+Route::get('/dashboard/music', [MusicController::class, 'index'])->middleware(['auth'])->name('music.index');
+Route::post('/dashboard/music/store', [MusicController::class, 'store'])->middleware(['auth'])->name('music.store');
+Route::delete('/dashboard/music/{id}', [MusicController::class, 'destory'])->middleware(['auth'])->name('music.destroy');
+Route::get('/dashboard/music/edit/{id}', [MusicController::class, 'edit'])->middleware(['auth'])->name('music.edit');
+Route::put('/dashboard/music/update/{id}', [MusicController::class, 'update'])->middleware(['auth'])->name('music.update');
+
 
 require __DIR__ . '/auth.php';
 

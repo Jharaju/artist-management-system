@@ -31,26 +31,6 @@
     color: whitesmoke;
 }
 .pagination li{margin-right: 3px;}
-.box .box-header{
-    display: flex;
-    
-}
-.box .box-header .import form{
-    width: auto;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
-.box .box-header .import form .form-group{
-    display: flex;
-    padding: auto 0;
-}
-.box .box-header .import form .button{
-    width: 75px;
-    height: 35px;
-    margin-left: 5px;
-}
-.hide{display: none;}
 </style>
 @endpush
 
@@ -67,7 +47,7 @@
         </ol>
     </div>
 
-    @include('admin.pages.artist.form')
+    @include('admin.pages.music.form')
     @include('layout.flash-message')
 
     {{--        <!-- Main content -->--}}
@@ -79,20 +59,11 @@
                    <div class="col-lg-12 m-b-3">
                        <div class="box box-info" style="padding: 10px;">
                            <div class="box-header with-border p-t-1">
-                             <a href="#" id="form" class="button"> <button type="button" class="btn-sm btn-primary mt-2 mb-2 button">Create</button> </a>
-                             <button type="button" class="btn-sm btn-primary mt-2 mb-2 ml-4 button" id="import-btn">Import</button>
-                             <div class="import ml-4 hide" id="import">
-                                <form action="#" method="post" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                    <input type="file" class="form-control mt-3" name="file" id="file">
-                                    </div>
-                                    <button type="submit" class="btn-sm btn-primary button">Import</button>
-                                </form>
-                             </div>     
+                             <a href="#" id="form" class="button"> <button type="button" class="btn-sm btn-primary mt-2 mb-2 button">Create</button> </a>     
                            </div>
                            <div class="col-lg-12">
 
-                              <form action="{{ route('artist.index') }}" method="GET">
+                              <form action="{{ route('music.index') }}" method="GET">
                                   <div class="input-group">
                                     <input type="text" class="search-query form-control" placeholder="Search" name="search" value="{{ request('search') }}" />
                                         <span class="input-group-btn" style="margin-left:10px;">
@@ -110,32 +81,33 @@
                                       <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            <th>Dob</th>
-                                            <th>Gender</th>
-                                            <th>Address</th>
-                                            <th>First Release Year</th>
-                                            <th>No Of Albums Released</th>
+                                            <th>Artist</th>
+                                            <th>Title</th>
+                                            <th>genre</th>
+                                            <th>Music</th>
                                             <th>Action</th>
                                         </tr>
                                       </thead>
                                         <tbody>
-                                            @if(isset($artist[0]))
-                                            @foreach ($artist as $key => $product)
+                                            @foreach ($music as $key => $product)
                                             <tr>
                                                 <td>{{ ++ $key }}</td>
-                                                <td>{{ $product->name }}</td>
-                                                <td>{{ $product->dob }}</td>
-                                                <td>{{ $product->gender }}</td>
-                                                <td>{{ $product->address }}</td>
-                                                <td>{{ $product->first_release_year }}</td>
-                                                <td>{{ $product->no_of_albums_released }}</td>
+                                                <td>{{ $product->artist_name }}</td>
+                                                <td>{{ $product->title }}</td>
+                                                <td>{{ $product->genre }}</td>
+                                                <td>
+                                                <audio controls>
+                                                    <!-- <source src="horse.ogg" type="audio/ogg"> -->
+                                                    <source src="{{asset('storage/musics/'.$product->album_name)}}" type="audio/mpeg">
+                                                
+                                                </audio>
+                                                </td>
                                                 
                                                 <td>
-                                                    <a href="{{ url('/dashboard/artist/edit/' . $product->id) }}"><span class="label label-success"><i class="fa fa-pencil-square" aria-hidden="true"></i></span></a>
+                                                    <a href="{{ url('/dashboard/music/edit/' . $product->id) }}"><span class="label label-success"><i class="fa fa-pencil-square" aria-hidden="true"></i></span></a>
                                                 </td>
                                                 <td>
-                                                     <form method="POST" action="{{ route('artist.destroy', $product->id) }}">
+                                                     <form method="POST" action="{{ route('music.destroy', $product->id) }}">
                                                      @csrf
                                                     <input name="_method" type="hidden" value="DELETE">
                                                     <button type="submit" class="show_confirm label-danger" data-toggle="tooltip" title='Delete' style="background: tranparent; border:none;"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
@@ -143,7 +115,6 @@
                                                 </td>
                                             </tr>
                                             @endforeach
-                                            @endif
                                         </tbody>
    
                                    </table>
@@ -186,10 +157,12 @@ $('.modal').css("background-color", "#454d55");
 
 $('.close').click(function(){
     // $('#formModal').hide();
-    $(location).attr("href", "/dashboard/artist/");
+    $(location).attr("href", "/dashboard/music/");
 });
 </script>
 @endif
+
+
 
 @endsection
 
@@ -220,11 +193,6 @@ $('.close').click(function(){
       $('#form').click(function(e){
             e.preventDefault();
             $('#formModal').modal();
-        });
-
-        $('#import-btn').click(function(e){
-        $('#import').toggleClass('hide');
-        $('#import-btn').toggleClass('hide');
         });
   
 </script>

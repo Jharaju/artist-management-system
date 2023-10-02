@@ -19,28 +19,28 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">PERSONAL</li>
             <li class="{{ (request()->is('dashboard')) ? 'active':''  }}">
-                <a href="/">
+                <a href="{{route('dashboard')}}">
                     <i class="icon-home"></i> <span>Dashboard</span>
 
                 </a>
             </li>
 
-            <li class="{{ (request()->is('')) ? 'active':''  }}">
-                <a href="/">
+            <li class="{{ (request()->is('dashboard/user')) || (request()->is('dashboard/user/*')) ? 'active':'' }}">
+                <a href="{{route('user.index')}}">
                     <i class="icon-home"></i> <span>User Management</span>
 
                 </a>
             </li>
 
-            <li class="{{ (request()->is('')) ? 'active':''  }}">
-                <a href="/">
+            <li class="{{(request()->is('dashboard/artist')) || (request()->is('dashboard/artist/*')) ? 'active':'' }}">
+                <a href="{{route('artist.index')}}">
                     <i class="icon-home"></i> <span>Artist Management</span>
 
                 </a>
             </li>
 
-            <li class="{{ (request()->is('')) ? 'active':''  }}">
-                <a href="/">
+            <li class="{{(request()->is('dashboard/music')) || (request()->is('dashboard/music/*')) ? 'active':'' }}">
+                <a href="{{route('music.index')}}">
                     <i class="icon-home"></i> <span>Music Management</span>
 
                 </a>

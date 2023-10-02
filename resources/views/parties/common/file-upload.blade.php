@@ -14,7 +14,7 @@
                 $('#'+id+'_img').attr('src', data.result.full_url);
                 $('#'+id+'_path').val(data.result.image_name);
                 $('#'+ id +'_progress').parent().removeClass('progress-striped');
-                $('#'+id+'_help_text').text('Image Upload Successfully');
+                $('#'+id+'_help_text').text('File Upload Successfully');
             },
             error: function(e,data){
                 $('#'+id+'_help_text').text(eval('e.responseJSON.'+id+'_image')[0]);

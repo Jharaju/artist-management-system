@@ -15,9 +15,11 @@
 @include('layout.header')
 @include('layout.sidebar')
 <!-- BEGIN CONTAINER -->
-@include('layout.flash-message')
+<!-- @include('layout.flash-message') -->
 
+<div>
 @yield('content')
+</div>
 <!-- END CONTAINER -->
 @include('layout.footer')
 @include('layout.script')
