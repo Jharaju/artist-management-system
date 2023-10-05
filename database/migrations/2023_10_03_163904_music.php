@@ -14,7 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('music', function (Blueprint $table) {
-            $table->foreign('artist_id')->references('id')->on('artists')->onDelete();
+            $table->dropForeign(['artist_id']);
+            $table->foreign('artist_id')
+                ->references('id')->on('artists')
+                ->onDelete('cascade')
+                ->change();
         });
     }
 

@@ -99,7 +99,13 @@ class MusicController extends Controller
 
     }
 
-    public function destroy(){}
+    public function destroy(Request $request, $id){
+        $query = "DELETE FROM `music` WHERE id = $id;";
+        if($this->musicRepository->delete($query)){
+            Session::flash('success', 'Music deleted successfully.');
+            return redirect()->route('music.index');
+        }
+    }
 
     
 

@@ -11,7 +11,7 @@
                     <div class="thank-you-pop">
                         <img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="">
                         <h1>Thank You!</h1>
-                        <p>Form submitted successfully</p>
+                        <p>{{Session::get('success')}}</p>
                         <button onclick="$('.modal').css('display','none')" class="btn btn-primary  mt-2"><i class="fa fa-check"></i>
                             Ok</button>
 

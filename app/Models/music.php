@@ -5,7 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class music extends Model
+class Music extends Model
 {
     use HasFactory;
+
+    protected $table = "music";
+
+    protected $fillable = [
+        'artist_id',
+        'title',
+        'album_name',
+        'genre',
+    ];
 }

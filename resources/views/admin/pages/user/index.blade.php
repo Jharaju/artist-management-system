@@ -82,7 +82,8 @@
                              <a href="#" id="form"> <button type="button" class="btn-sm btn-primary mt-2 mb-2 button">Create</button> </a>
                              <button type="button" class="btn-sm btn-primary mt-2 mb-2 ml-4 button" id="import-btn">Import</button>
                              <div class="import ml-4 hide" id="import">
-                                <form action="#" method="post" enctype="multipart/form-data">
+                                <form action="{{route('user.import')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
                                     <div class="form-group">
                                     <input type="file" class="form-control mt-3" name="file" id="file">
                                     </div>

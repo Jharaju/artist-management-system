@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Modules\Backend\Website\Artist\Repositories\ArtistRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportArtist;
 
 class ArtistController extends Controller
 {
@@ -93,9 +95,25 @@ class ArtistController extends Controller
 
     }
 
-    public function destroy(){}
+    public function destroy(Request $request, $id){
+        $query = "DELETE FROM `artists` WHERE id = $id;";
+        if($this->artistRepository->delete($query)){
+            Session::flash('success', 'Artist deleted successfully.');
+            return redirect()->route('artist.index');
+        }
+    }
 
     
+    public function importArtist(Request $request){
+        $imported = Excel::import(new ImportArtist, $request->file('file')->store('files'));
+        if($imported){
+            Session::flash('success', 'Artist imported successfully.');
+            return redirect()->back();
+        }else{
+            Session::flash('error', 'Failed to import.');
+            return redirect()->back();
+        }
+    }
 
 
 

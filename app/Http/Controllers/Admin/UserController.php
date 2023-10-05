@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Modules\Backend\Website\User\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ImportUser;
 
 class UserController extends Controller
 {
@@ -101,7 +103,24 @@ class UserController extends Controller
 
     }
 
-    public function destroy(){}
+    public function destroy(Request $request, $id){
+        $query = "DELETE FROM `users` WHERE id = $id;";
+        if($this->userRepository->delete($query)){
+            Session::flash('success', 'User deleted successfully.');
+            return redirect()->route('user.index');
+        }
+    }
+
+    public function importUser(Request $request){
+        $imported = Excel::import(new ImportUser, $request->file('file')->store('files'));
+        if($imported){
+            Session::flash('success', 'User imported successfully.');
+            return redirect()->back();
+        }else{
+            Session::flash('error', 'Failed to import.');
+            return redirect()->back();
+        }
+    }
 
 
 }
